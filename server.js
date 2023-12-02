@@ -7,34 +7,38 @@ const {msgTemplate}=require('./msgTemplate.js')
 const {sendTwilioSms}=require('./twilio.js')
 const {send_insta_msg}=require('./SinchInstagram.js')
 const cron = require('node-cron');
-app.get('/notifyUsers',async (req,res)=>{
-    const[userData,userKey,error]=await getUserData()
-    if(error) return  res.sendStatus(400)
-    // console.log('in data 1',userData,userKey);
-    for(let i=0;i<userKey.length;i++){
-        let data=userData[i][userKey[i]]
-        console.log('in data2',data)
+// app.get('/notifyUsers',async (req,res)=>{
+//     const[userData,userKey,error]=await getUserData()
+//     if(error) return  res.sendStatus(400)
+//     // console.log('in data 1',userData,userKey);
+//     for(let i=0;i<userKey.length;i++){
+//         let data=userData[i][userKey[i]]
+//         console.log('in data2',data)
 
-        let unansweredQuestions=questionPreprocessor(data)
-        console.log(unansweredQuestions)
-        if(unansweredQuestions){
-            if(data.Recent_Channel==='SMS'){
-                let notifyMsg=msgTemplate(unansweredQuestions,data.username)
-                sendTwilioSms(notifyMsg,data.Phone_Number)
-            }
-        }
-        else{
-            console.log('no unanswered questions')
-        }
+//         let unansweredQuestions=questionPreprocessor(data)
+//         console.log(unansweredQuestions)
+//         if(unansweredQuestions){
+//             if(data.Recent_Channel==='SMS'){
+//                 let notifyMsg=msgTemplate(unansweredQuestions,data.username)
+//                 sendTwilioSms(notifyMsg,data.Phone_Number)
+//             }
+//         }
+//         else{
+//             console.log('no unanswered questions')
+//         }
         
-    }
+//     }
 
-    return res.send(userData)
+//     return res.send(userData)
 
-})
+// })
 
-// Schedule the cron job s
-cron.schedule('*/2 * * * *', async() => {
+
+
+// Schedule the cron job fr every 12 hours(only for testing purpose)
+
+
+cron.schedule('0 */12 * * *', async() => {
     console.log('in cron job')
     const[userData,userKey,error]=await getUserData()
     if(error) return  res.sendStatus(400)
