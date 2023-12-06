@@ -35,7 +35,7 @@ const cron = require('node-cron');
 
 
 
-// Schedule the cron job fr every 12 hours(only for testing purpose)
+// Schedule the cron job fr every 12 hours
 
 
 cron.schedule('0 */12 * * *', async() => {
